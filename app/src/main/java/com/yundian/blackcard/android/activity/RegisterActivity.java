@@ -83,7 +83,8 @@ public class RegisterActivity extends BaseActivity implements OnAPIListener<Blac
         this.blackcardInfos = blackcardInfos;
         registerInfo.setCustomNamePrice(blackcardInfos.getCustomNamePrice());
         customNameTips.setText(String.format("定制姓名(¥%.2f)", blackcardInfos.getCustomNamePrice()));
-        registerInfo.setBlackcardInfo(blackcardInfos.getBlackcards().get(1));
+        Integer index = blackcardInfos.getBlackcards().size() > 1 ? 1 : 0;
+        registerInfo.setBlackcardInfo(blackcardInfos.getBlackcards().get(index));
         PrivilegeInfo.blackCardId = registerInfo.getBlackcardInfo().getBlackcardId().toString();
 //        blackcardGridview.setNumColumns(blackcardInfos.getBlackcards().size());
         blackcardGridview.setAdapter(new CommonAdapter<BlackcardInfo>(this, R.layout.blackcard_item, blackcardInfos.getBlackcards()) {
