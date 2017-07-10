@@ -1,7 +1,9 @@
 package com.yundian.blackcard.android.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 
 import com.yundian.blackcard.android.R;
 import com.yundian.blackcard.android.model.DeviceInfo;
@@ -40,7 +42,6 @@ public class StartActivity extends BaseActivity {
     }
 
     private void deviceRegister() {
-
         DeviceInfo deviceInfo = new DeviceInfo();
         String deviceModel = String.format("%s %s", DeviceUtils.getPhoneBrand(), DeviceUtils.getPhoneModel());
         deviceInfo.setDeviceId(DeviceUtils.getDeviceId(this))
@@ -52,7 +53,14 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex) {
                 onShowError(ex);
-                deviceRegister();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        deviceRegister();
+                    }
+                },1000 * 5);
+
             }
 
             @Override

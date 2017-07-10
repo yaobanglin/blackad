@@ -5,8 +5,6 @@ import android.content.Context;
 import com.yundian.blackcard.android.BuildConfig;
 import com.yundian.blackcard.android.networkapi.okhttp.BlackcardServiceImpl;
 import com.yundian.blackcard.android.networkapi.okhttp.CommServiceImpl;
-import com.yundian.blackcard.android.networkapi.okhttp.DynamicService;
-import com.yundian.blackcard.android.networkapi.okhttp.RetrofitTradeService;
 import com.yundian.comm.networkapi.config.NetworkAPIConfig;
 import com.yundian.comm.networkapi.invocationhandler.RetrofitServiceProxy;
 import com.yundian.comm.networkapi.manage.ServiceManage;

@@ -103,9 +103,10 @@
                 android:hint="真实姓名（我们将保密您的私人信息）" />
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/identity_card"
                 style="@style/comm_edittext_style"
-                android:hint="真实身份证号码（我们将保密您的私人信息）"
+                android:hint="真实身份证号码（选填）"
                 android:digits="1234567890xX"
                 android:imeOptions="actionGo" />
 

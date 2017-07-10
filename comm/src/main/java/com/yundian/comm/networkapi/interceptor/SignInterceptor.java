@@ -88,7 +88,7 @@ public class SignInterceptor implements Interceptor {
         }
         else {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
-                builder.setEncodedQueryParameter(entry.getKey(), entry.getValue().toString());
+                builder.setQueryParameter(entry.getKey(), entry.getValue().toString());
             }
         }
 
