@@ -39,6 +39,7 @@ import com.yundian.blackcard.android.fragment.MyFragment;
 import com.yundian.blackcard.android.model.UpdateInfo;
 import com.yundian.blackcard.android.model.UserInfo;
 import com.yundian.blackcard.android.networkapi.NetworkAPIFactory;
+import com.yundian.blackcard.android.util.AppUpdaterUtil;
 import com.yundian.blackcard.android.util.StatusBarCompat;
 import com.yundian.comm.networkapi.listener.OnAPIListener;
 import com.yundian.comm.util.DeviceUtils;
@@ -184,7 +185,7 @@ public class MainActivity extends BaseActivity {
                     myFragment.setOnTribeSelectedListener(new MyFragment.OnTribeSelectedListener() {
                         @Override
                         public void onTribeSelected() {
-                            if(fragments[1]==null){
+                            if (fragments[1] == null) {
                                 fragments[1] = dynamicFragment = new DynamicFragment();
                             }
                             Bundle bundle = new Bundle();
@@ -219,67 +220,14 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        checkAppVersion();
-    }
-
-    private void checkAppVersion() {
-        Integer appVersionCode = Integer.parseInt(DeviceUtils.getVersionCode(context));
-        NetworkAPIFactory.getCommService().checkAppVersion(appVersionCode, new OnAPIListener<UpdateInfo>() {
-            @Override
-            public void onError(Throwable ex) {
-                ex.printStackTrace();
-            }
-
-            @Override
-            public void onSuccess(UpdateInfo updateInfo) {
-                if (updateInfo != null && updateInfo.getIsUpdate() == 1) {
-                    File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                    if (!path.exists()) {
-                        path.mkdirs();
-                    }
-                    String fileName = getPackageName() + "_" + updateInfo.getVersion() + ".apk";
-                    if (updateInfo.getIsForce() == 1) {
-                        forceupdatedialog = new ForceUpdateDialog(MainActivity.this);
-                        forceupdatedialog.setDownloadUrl(updateInfo.getUrl())
-                                .setTitle(getString(R.string.app_name) + "有更新啦")
-                                .setVersionName(updateInfo.getVersion())
-                                .setUpdateDesc(updateInfo.getDescription())
-                                .setFileName(fileName)
-                                .setFilePath(path.getAbsolutePath())
-                                .show();
-                    } else {
-                        updateDialog = new UpdateDialog(MainActivity.this);
-                        updateDialog.setTitle(getString(R.string.app_name) + "有更新啦")
-                                .setDownloadUrl(updateInfo.getUrl())
-                                .setVersionName(updateInfo.getVersion())
-                                .setUpdateDesc(updateInfo.getDescription())
-                                .setFileName(fileName)
-                                .setFilePath(path.getAbsolutePath())
-                                .setShowProgress(true)
-                                .setIconResId(R.mipmap.ic_launcher)
-                                .setAppName(getString(R.string.app_name))
-                                .show();
-                    }
-
-                }
-            }
-        });
+        AppUpdaterUtil.checkAppVersion(this);
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (requestCode == UPDATE_DIALOG_PERMISSION_REQUEST_CODE) {
-                updateDialog.download();
-            } else if (requestCode == FORCE_UPDATE_DIALOG_PERMISSION_REQUEST_CODE) {
-                forceupdatedialog.download();
-            }
-        } else {
-            showToast("请开启读写sd卡权限,不然无法正常升级");
-        }
+        AppUpdaterUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 
     @Override

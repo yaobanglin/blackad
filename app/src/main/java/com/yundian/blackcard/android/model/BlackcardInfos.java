@@ -11,6 +11,7 @@ public class BlackcardInfos {
     private List<BlackcardInfo> blackcards;
     private List<PrivilegeInfo> privileges;
     private Double customNamePrice;
+    private String serviceUrl;
 
     public List<BlackcardInfo> getBlackcards() {
         return blackcards;
@@ -53,5 +54,15 @@ public class BlackcardInfos {
             lists.add(list);
         }
         return lists;
+    }
+
+
+    public String getServiceUrl() {
+        return serviceUrl;
+    }
+
+    public BlackcardInfos setServiceUrl(String serviceUrl) {
+        this.serviceUrl = serviceUrl;
+        return this;
     }
 }

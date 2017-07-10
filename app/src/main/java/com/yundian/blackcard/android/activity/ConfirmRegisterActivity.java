@@ -56,12 +56,16 @@ public class ConfirmRegisterActivity extends BaseActivity implements OnAPIListen
         if (isPay) {
             stringBuilder.append("支付方式：微信 <br/><br/>");
             stringBuilder.append(String.format("支付金额：<font color=\"#E3A63F\">¥%.2f</font> <br/>", monery));
+            stringBuilder.append(String.format("    收件人：%s <br/>", registerInfo.getFullName()));
         }
 
-        stringBuilder.append(String.format("    收件人：%s <br/>", registerInfo.getFullName()));
         stringBuilder.append(String.format("联系电话：%s <br/>", registerInfo.getPhoneNum()));
-        stringBuilder.append(String.format("收件地址：%s %s%s <br/>", registerInfo.getProvince(), registerInfo.getCity(), registerInfo.getAddr()));
-        stringBuilder.append("指定快递：特速快递<br/>");
+
+        if (isPay) {
+            stringBuilder.append(String.format("收件地址：%s %s%s <br/>", registerInfo.getProvince(), registerInfo.getCity(), registerInfo.getAddr()));
+            stringBuilder.append("指定快递：特速快递<br/>");
+        }
+
         confirmInfo.setText(Html.fromHtml(stringBuilder.toString()));
     }
 
@@ -112,7 +116,7 @@ public class ConfirmRegisterActivity extends BaseActivity implements OnAPIListen
             showToast("注册成功");
             setResult(RESULT_OK);
             finish();
-        }else {
+        } else {
             createPay();
         }
     }

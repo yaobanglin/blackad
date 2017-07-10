@@ -201,5 +201,8 @@
     public static ** valueOf(java.lang.String);
 }
 
+-dontwarn com.qiyukf.**
+-keep class com.qiyukf.** {*;}
+
 # for DexGuard only
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule

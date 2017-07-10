@@ -4,6 +4,7 @@ package com.yundian.blackcard.android.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.yundian.blackcard.android.model.BlackcardInfos;
 import com.yundian.blackcard.android.model.PrivilegeInfo;
 import com.yundian.blackcard.android.model.RegisterInfo;
 import com.yundian.blackcard.android.networkapi.NetworkAPIFactory;
+import com.yundian.blackcard.android.util.AppUpdaterUtil;
 import com.yundian.comm.networkapi.listener.OnAPIListener;
 import com.yundian.comm.util.StringUtils;
 import com.yundian.comm.util.ValidateUtils;
@@ -70,9 +72,16 @@ public class RegisterActivity extends BaseActivity implements OnAPIListener<Blac
     public void initData() {
         super.initData();
         setTitle(R.string.title_activity_register);
-
+        AppUpdaterUtil.checkAppVersion(this);
         NetworkAPIFactory.getBlackcardService().blackcardInfos(this);
         showLoader("加载中...");
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AppUpdaterUtil.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 
 
@@ -197,7 +206,11 @@ public class RegisterActivity extends BaseActivity implements OnAPIListener<Blac
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setData(Uri.parse("http://www.jingyingheika.com/"));
+                String serviceUrl = "https://heika.qiyukf.com/client?k=9bcdb2182bde2835e2b0e7fc72a39e68&wp=1";
+                if (blackcardInfos != null && StringUtils.isNotEmpty(blackcardInfos.getServiceUrl())) {
+                    serviceUrl = blackcardInfos.getServiceUrl();
+                }
+                intent.setData(Uri.parse(serviceUrl));
                 intent.setClass(RegisterActivity.this, WebViewActivity.class);
                 startActivity(intent);
             }

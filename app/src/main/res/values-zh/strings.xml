@@ -8,7 +8,7 @@
     <string name="title_activity_confirm_register">确认注册信息</string>
     <string name="input_repassword_hint">请输入重置密码</string>
     <string name="title_activity_repassword">重置密码</string>
-    <string name="privilege_tips">云栖会籍专属特权</string>
+    <string name="privilege_tips">无限黑卡专属特权</string>
     <string name="custom_name_tips">TIPS：定制卡因工序影响会出现部分延迟，请耐心等待。</string>
     <string name="custom_name_hint">请输入您的中文姓名全拼或者英文名</string>
     <string name="custom_name_title">定制姓名</string>
